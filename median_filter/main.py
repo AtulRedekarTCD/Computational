@@ -1,13 +1,21 @@
 import numpy as np
 from scipy import signal as sc
-from scipy.io import wavfile
+
+# @ Computational Assignment 02 Median filter
+#   This code illustrates to implement 1-D median filter
+#   from input signal datawith the window.
+#
+# @ File Name  : main.py
+# @ Author     : Atul Redekar
+# @ Supervisior: Angeliki Katsenou
+# @ Date       : 22/11/22
+
 
 # Definition
 # function Name :  median_filter(data, window)
 # Inputs        :  list data   -> Input signal Array
 #               :  int  window -> Size of Window
 # Output        :  list median_array  -> Median Computed Array
-
 
 def median_filter(data, window):
 
@@ -47,7 +55,7 @@ def median_filter(data, window):
         return median_array
     else:
         # Throwing error for even window
-        print("Window size hve to odd number")
+        print("Window size has to be odd number")
 
 
 if __name__ == "__main__":
