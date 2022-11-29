@@ -1,10 +1,14 @@
 import numpy as np
-import random
+import unittest
 from scipy import signal as sc
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
 import median_filter as median
 from scipy.io.wavfile import write
+import time
+from scipy import signal as sc
+from tqdm import tqdm
+from playsound import playsound
 
 def get_filter_len(degraded_data_1d):
 
@@ -107,10 +111,15 @@ if __name__ == "__main__":
     # data point required before and after click to find median of data
     padding = (window - 1) // 2
 
+    start = time.time()
+
     for index in range(len(degraded_data_1d)):
         if( detect[index] == 1 ):
             res_data[index] = median.median_filter(degraded_data_1d[index - padding : index + padding + 1], window)
 
+    stop = time.time()  
+
+    print(" Execution time for Median Filter : ", format(stop - start))
 
     # Plotting original, degraded and restored audio data
     figure, axs = plt.subplots(3, 1)
@@ -119,7 +128,7 @@ if __name__ == "__main__":
     axs[1].plot(degraded_data_1d)
     axs[1].set_title('Degraded Audio Data')
     axs[2].plot(res_data)
-    axs[2].set_title('Restored Audio Data')
+    axs[2].set_title('Restored Audio Data - Median Filter')
 
     for ax in axs.flat:
         ax.label_outer()
@@ -128,5 +137,21 @@ if __name__ == "__main__":
 
     # Writing the restored data to create a output audio file
     res_data1 = np.array(res_data)
-    write("output.wav", samplerate, res_data1.astype(np.int16))
+    write("output_median_filter.wav", samplerate, res_data1.astype(np.int16))
 
+    # Playing the Output Audiio sound 
+    playsound("output_median_filter.wav")
+
+Test_data = [1, 2, 10, 4, 3]
+filter_size = 5
+
+class TestCode(unittest.TestCase):
+    def Test_median_filter(self):
+        median_val = median.median_filter(Test_data, filter_size)
+        median_scipy_array = sc.signal.medfilt(Test_data, kernel_size = 5)
+
+        med = median_scipy_array[len(median_scipy_array) // 2 + 1]
+
+        check = np.array(median_val, med)
+
+unittest.main()

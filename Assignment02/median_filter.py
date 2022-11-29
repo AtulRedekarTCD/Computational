@@ -1,7 +1,7 @@
 import numpy as np
 
-def median_filter(data, window):
 
+def median_filter(data, window):
     '''
     median_filter sorts the input Audio data array and 
     Returns the median from Audio data array.
@@ -15,13 +15,13 @@ def median_filter(data, window):
     '''
 
     # Check for odd window size
-    if(window % 2 == 1):
+    if (window % 2 == 1):
         length = len(data)
         window_array = [0] * len(data)
         padding = (window - 1) // 2
 
         # Sorting in window size arrays in ascending order
-        window_array = np.sort(data)       
+        window_array = np.sort(data)
 
         # printing window size arrays
         # print("window_array ", window_array)

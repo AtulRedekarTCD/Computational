@@ -1,5 +1,4 @@
-# Add here a title for the project
-Audio Retoration Using Median and Cubic Spline Interpolation Methods
+# Audio Retoration Using Median and Cubic Spline Interpolation Methods
 
 ## High-level Description of the project
 This Assignment is remove tnhe clicks from Audio signal using median filter and cubic spline interpolation techniques.
@@ -25,7 +24,7 @@ For more details check [here](https://github.com/bndr/pipreqs)
 
 Afer installing all required packages you can run the demo file simply by typing:
 ```sh
-python demo_audio_restoration.py
+python Audio_restoration.py
 ```
 ---
 
@@ -69,32 +68,40 @@ write the output data into the 'output.wav' file
 
 **Results**
 
-1. For the median filter, different lengths were explored to test the effectiveness of the restoration. In particular, XXXX were tested and XXX was observed to deliver the lowest MSE, as shown in the figure below.
+1. For the median filter, different Filter lengths were explored to find the quality of the restoration and their MSE Errros. Below figure is of MSE against the Filter length. 
 
-<img src="MedianFilter_MSEvsLength.png" width="350">
+<img src="Figure_2.png" width="700">
 
-The restored waveform <output_medianFilter.wav> with the optimal filter length is given below:
+From the graph it is seen that optimal filter length is : 11 for lowest MSE '0.6'
+The comparison over the original, degraded and restored data.
 
+<img src="Figure_1.png" width="700">
 
-
-2. Using the cubic splines, we observe ....
-
-The restored waveform <output_cubicSplines.wav> with the optimal filter length is given below:
-
-
-3. Comparing the two different interpolation methods, we notice that method X achieves a lower MSE. The runtime of XX method is .....
-
-After listening to the two restored files, we notice ...
+The restored data is waveform <output_medianFilter.wav>
+The execution Time for 
 
 
----
+2. cubic splines is implemented in cubic_spline.py 
+The MSE for cubic_spline is '0.4'.
+The execution time for Cubic spline function is '15.40' sec.
+Below Figure shows the original, degraded and restored Sound data by Cubic Spline.
+
+<img src="Figure_3.png" width="700">
+
+
+3. Comparing the median Filter and Cubic Spline interpolation methods, we can conclude the notice that CubicSpline achieves a lower MSE. The runtime of Median Filter method is 
+
+After listening to the two method restored files, I notice that Cublic spline has some clicks and median filter is more clear and almost no clicks.
+
+
+
 ## Credits
 
-This code was developed for purely academic purposes by XXXX (add github profile name) as part of the module ..... 
+This code was developed for purely for academic purposes by Atul Redekar github profile name - AtulRedekarTCD as part of the module computational Module.
 
-Resources:
-- XXXX
-- XXX
+## Resources
+- For Implementation of CubicSpline https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.CubicSpline.html 
+- 
 
 
 
