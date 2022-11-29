@@ -8,7 +8,7 @@ from scipy.io.wavfile import write
 from scipy.interpolate import CubicSpline
 import time
 from tqdm import tqdm
-
+from playsound import playsound
 
 # reading Data from Audio files
 samplerate, audio_data = wavfile.read("apple_audio.wav")
@@ -85,3 +85,4 @@ plt.show()
 # Writing the restored data to create a output audio file
 res_data1 = np.array(data_n)
 write("output_cubic_spline.wav", samplerate, res_data1.astype(np.int16))
+playsound("output_cubic_spline.wav")

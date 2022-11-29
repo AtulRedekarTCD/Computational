@@ -78,15 +78,17 @@ The comparison over the original, degraded and restored data.
 <img src="Figure_1.png" width="700">
 
 The restored data is waveform <output_medianFilter.wav>
-The execution Time for 
+The execution Time for Median Filter is '0.07' sec
+Below Figure shows the original, degraded and restored Sound data by mdeian filter.
 
+<img src="Figure_1.png" width="700">
 
 2. cubic splines is implemented in cubic_spline.py 
 The MSE for cubic_spline is '0.4'.
 The execution time for Cubic spline function is '15.40' sec.
 Below Figure shows the original, degraded and restored Sound data by Cubic Spline.
 
-<img src="Figure_3.png" width="700">
+<img src="Figure_4.png" width="700">
 
 
 3. Comparing the median Filter and Cubic Spline interpolation methods, we can conclude the notice that CubicSpline achieves a lower MSE. The runtime of Median Filter method is 
