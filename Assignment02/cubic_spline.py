@@ -21,6 +21,7 @@ degraded_data_1d = degraded_data[:, 1]
 # Creating a Array of detect for position of clicks
 detect = np.zeros(len(degraded_data_1d))
 
+# Creating a detection array from degraded_data with certain threshold
 Threshold = 32000
 for i in range(len(degraded_data_1d)):
     if (degraded_data_1d[i] >= Threshold):
@@ -39,6 +40,10 @@ axs[1].set_title('Degraded Audio Data')
 axs[2].plot(detect)
 axs[2].set_title('Clicks')
 
+plt.show()
+plt.pause(3)
+plt.close
+
 start = time.time()
 
 click_index = np.where(detect == 1)
@@ -46,24 +51,28 @@ click_index = np.where(detect == 1)
 data_n = degraded_data_1d
 aranged_data = np.arange(len(data_n))
 
-
+# Array indexs of clicks
 x_data = np.delete(aranged_data, click_index)
+
+# Array of data where clicks are present
 y_data = np.delete(data_n, click_index)
 
-
+# interpolating from cubic spline 
 for i in tqdm(range(0, 100)):
     restored = CubicSpline(x_data, y_data)
-    time.sleep(0.1)
+    # time.sleep(0.1)
 
 for i in range(len(click_index)):
     data_n[click_index[i]] = restored(click_index)[i]
 
 stop = time.time()
 
-print(" Execution time for cubic Spline : ", format(stop - start))
+# Calculating execution time 
+Exe_time_cubic_spline = format(stop - start)
+print(" Execution time for cubic Spline : ", Exe_time_cubic_spline)
 
 MSE = np.square(np.subtract(audio_data_1d, data_n)).mean()
-print(" MSE ", abs(MSE))
+print(" MSE Cubic Spline : ", MSE)
 
 samplerate, degraded_data1 = wavfile.read("degraded.wav")
 deg_data = degraded_data1[:, 1]
@@ -81,8 +90,17 @@ for ax in axs.flat:
     ax.label_outer()
 
 plt.show()
+plt.pause(3)
+plt.close()
 
 # Writing the restored data to create a output audio file
-res_data1 = np.array(data_n)
-write("output_cubic_spline.wav", samplerate, res_data1.astype(np.int16))
+res_data = np.array(data_n)
+write("output_cubic_spline.wav", samplerate, res_data.astype(np.int16))
+
+playsound("deg_audio_msg.mp3")
+time.sleep(1)
+playsound("degraded.wav")
+
+playsound("res_audio_msg.mp3")
+time.sleep(1)
 playsound("output_cubic_spline.wav")

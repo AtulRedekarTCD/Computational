@@ -62,8 +62,11 @@ def get_filter_len(degraded_data_1d):
     plt.ylabel("MSE")
     plt.title("MSE vs Filter Size")
     plt.show()
+    plt.pause(3)
+    plt.close()
 
     return filter_len
+
 
 if __name__ == "__main__":
 
@@ -83,6 +86,10 @@ if __name__ == "__main__":
         if( abs(degraded_data_1d[i]) >= Threshold ):
             detect[i] = 1
 
+    for i in range(len(degraded_data_1d)):
+        if (degraded_data_1d[i] <= (Threshold * -1)):
+          detect[i] = 1
+
     # Plotting original, degraded and detected clicks
     figure, axs = plt.subplots(3, 1)
     axs[0].plot(audio_data_1d)
@@ -96,6 +103,8 @@ if __name__ == "__main__":
         ax.label_outer()
 
     plt.show()
+    plt.pause(3)
+    plt.close()
 
 
     # Creating a copy of degraded data
@@ -113,13 +122,17 @@ if __name__ == "__main__":
 
     start = time.time()
 
-    for index in range(len(degraded_data_1d)):
-        if( detect[index] == 1 ):
-            res_data[index] = median.median_filter(degraded_data_1d[index - padding : index + padding + 1], window)
+    for i in tqdm(range(0, 100)):
+        for index in range(len(degraded_data_1d)):
+            if( detect[index] == 1 ):
+                res_data[index] = median.median_filter(degraded_data_1d[index - padding : index + padding + 1], window)
+        # time.sleep(0.1)
 
     stop = time.time()  
 
-    print(" Execution time for Median Filter : ", format(stop - start))
+    # Calculating execution time
+    Exe_time_median_filter = format(stop - start)
+    print(" Execution time for Median Filter : ", Exe_time_median_filter)
 
     # Plotting original, degraded and restored audio data
     figure, axs = plt.subplots(3, 1)
@@ -134,24 +147,36 @@ if __name__ == "__main__":
         ax.label_outer()
 
     plt.show()
+    plt.pause(3)
+    plt.close()
 
     # Writing the restored data to create a output audio file
     res_data1 = np.array(res_data)
     write("output_median_filter.wav", samplerate, res_data1.astype(np.int16))
 
-    # Playing the Output Audiio sound 
+    # Playing the Output Audio sound 
+    playsound("deg_audio_msg.mp3")
+    time.sleep(1)
+    playsound("degraded.wav")
+
+    playsound("res_audio_msg.mp3")
+    time.sleep(1)
     playsound("output_median_filter.wav")
 
-Test_data = [1, 2, 10, 4, 3]
-filter_size = 5
 
-class TestCode(unittest.TestCase):
+# Test Code for Unit Test
+class TestMedianFilter(unittest.TestCase):
     def Test_median_filter(self):
+        Test_data = [1, 3, 4, 40, 4, 3, 3]
+        filter_size = 7
+
         median_val = median.median_filter(Test_data, filter_size)
-        median_scipy_array = sc.signal.medfilt(Test_data, kernel_size = 5)
+        median_scipy_array = sc.signal.medfilt(Test_data, kernel_size = filter_size)
 
         med = median_scipy_array[len(median_scipy_array) // 2 + 1]
 
-        check = np.array(median_val, med)
+        self.assertEqual(median_val,med)
 
-unittest.main()
+if __name__ == "__main__":
+
+    unittest.main()
