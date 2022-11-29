@@ -1,6 +1,6 @@
 # Audio Restoration Using Median and Cubic Spline Interpolation Methods
 
-## High-level Description of the project
+## Description of the project
 This Assignment is about removing  the clicks from the Audio signal using median filter and cubic spline interpolation techniques.
 - median filtering
 It is a non-linear filter based on the principle of removing out liners using simple median technique. Although it 
@@ -39,7 +39,7 @@ python cubic_spline.py
 
 ## Methodology and Results
 
-Median Filter:
+* Median Filter:
 
 Flow chart Median Filter code:
 <img src="block_diagram_median.png" width="500">
@@ -86,12 +86,11 @@ write the output data into the 'output.wav' file and play the sound
 step 7:
 Perform unit test to check the median filter function works using unittest
 
-CubicSpline:
+* CubicSpline:
 
 Flow Chart for Cubic Spline:
 
-
-<img src="spline.png" width="500">
+<img src="block_diagram_cubicSpline.png" width="500">
 
 class scipy.interpolate.CubicSpline(x, y, axis=0, bc_type='not-a-knot', extrapolate=None)
 Parameters : x (array)
@@ -100,7 +99,7 @@ Parameters : x (array)
              bc_type(optional) boundary condition
              extrapolate(optional)[[2]](#2)
 
-<img src="block_diagram_cubicSpline.png" width="500">
+<img src="spline.png" width="500">
 
 Step 1:
 Read the original Audio and degraded File using wavefile functions
@@ -129,7 +128,7 @@ write the output data into the 'output.wav' file and play the sound
 **Results**
 
 1. For the median filter, different filter lengths were explored to find the quality of the restoration and their MSE Errros. The below figure is of MSE against the Filter length. 
-The degraded audio file used is <[Degraded_Audio.wav](../../../../../D:/Msc_Trinity/VS_Comp_Assign_02/Computational/Assignment02/degraded.wav)>
+The degraded audio file used is <[Degraded_Audio.wav](https://github.com/AtulRedekarTCD/Computational/tree/local/Assignment02/degraded.wav)>
 
 <img src="Figure_2.png" width="700">
 
@@ -138,7 +137,7 @@ The comparison over the original, degraded and restored data.
 
 <img src="Figure_1.png" width="700">
 
-The restored data is converted as Audio File <[Restored_Median_Filter.wav](../../../../../D:/Msc_Trinity/VS_Comp_Assign_02/Computational/Assignment02/output_median_filter.wav)>
+The restored data is converted as Audio File <[Restored_Median_Filter.wav](https://github.com/AtulRedekarTCD/Computational/tree/local/Assignment02/output_median_filter.wav)>
 
 The Below Figure shows the original, degraded and restored Sound data by Median filter.
 
@@ -151,7 +150,7 @@ The Below Figure shows the original, degraded and restored Sound data by Cubic S
 
 <img src="Figure_4.png" width="700">
 
-The restored data is converted as Audio File <[Restored_CubicSpline.wav](../../../../../D:/Msc_Trinity/VS_Comp_Assign_02/Computational/Assignment02/output_cubic_spline.wav)>
+The restored data is converted as Audio File <[Restored_CubicSpline.wav](https://github.com/AtulRedekarTCD/Computational/tree/local/Assignment02/output_cubic_spline.wav)>
 
 
 3. Comparing the median Filter and Cubic Spline interpolation methods, we can conclude that CubicSpline achieves a lower MSE than the median filter. The runtime of Median Filter method is 6-7 secs, whereas for cubic spline it is 4-5 secs. 
@@ -162,7 +161,7 @@ After listening to the both restored files, I notice that Cubic spline is slight
 
 ## Credits
 
-This code was developed for purely for academic purposes by Atul Redekar github profile name - AtulRedekarTCD as part of the module computational Module.
+This code was developed for purely for academic purposes by Atul Redekar github profile name - 'AtulRedekarTCD' as part of the module computational Module.
 
 ## Resources
 - <a id="1">[1]</a> EFFICIENT DSP IMPLEMENTATION OF MEDIAN FILTERING FOR REAL-TIME AUDIO
