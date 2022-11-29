@@ -21,11 +21,6 @@ def get_filter_len(degraded_data_1d):
                     filter_len         (int)    : filter length 
     '''
 
-    print(" type" , type(detect))
-    print(" max " , np.max(detect))
-
-    
-
     # Computing MSE for the window size from 3 to 19
     windows = [3,5,7,9,11,13,15,17,19]
 
@@ -66,70 +61,72 @@ def get_filter_len(degraded_data_1d):
 
     return filter_len
 
-# reading Data from Audio files
-samplerate, audio_data = wavfile.read("apple_audio.wav")
-samplerate, degraded_data = wavfile.read("degraded.wav")
+if __name__ == "__main__":
 
-# Using single channel 
-audio_data_1d = audio_data[:, 1]
-degraded_data_1d = degraded_data[:, 1]
+    # reading Data from Audio files
+    samplerate, audio_data = wavfile.read("apple_audio.wav")
+    samplerate, degraded_data = wavfile.read("degraded.wav")
 
-# Creating a Array of detect for position of clicks
-detect = np.zeros(len(degraded_data_1d))
+    # Using single channel 
+    audio_data_1d = audio_data[:, 1]
+    degraded_data_1d = degraded_data[:, 1]
 
-Threshold = 32000
-for i in range(len(degraded_data_1d)):
-    if( abs(degraded_data_1d[i]) >= Threshold ):
-        detect[i] = 1
+    # Creating a Array of detect for position of clicks
+    detect = np.zeros(len(degraded_data_1d))
 
-# Plotting original, degraded and detected clicks
-figure, axs = plt.subplots(3, 1)
-axs[0].plot(audio_data_1d)
-axs[0].set_title('Original Audio Data')
-axs[1].plot(degraded_data_1d)
-axs[1].set_title('Degraded Audio Data')
-axs[2].plot(detect)
-axs[2].set_title('Clicks')
+    Threshold = 32000
+    for i in range(len(degraded_data_1d)):
+        if( abs(degraded_data_1d[i]) >= Threshold ):
+            detect[i] = 1
 
-for ax in axs.flat:
-    ax.label_outer()
+    # Plotting original, degraded and detected clicks
+    figure, axs = plt.subplots(3, 1)
+    axs[0].plot(audio_data_1d)
+    axs[0].set_title('Original Audio Data')
+    axs[1].plot(degraded_data_1d)
+    axs[1].set_title('Degraded Audio Data')
+    axs[2].plot(detect)
+    axs[2].set_title('Clicks')
 
-plt.show()
+    for ax in axs.flat:
+        ax.label_outer()
+
+    plt.show()
 
 
-# Creating a copy of degraded data
-res_data = degraded_data_1d
+    # Creating a copy of degraded data
+    res_data = degraded_data_1d
 
-degraded_data_1d = degraded_data_1d.tolist()
+    degraded_data_1d = degraded_data_1d.tolist()
 
-# Computing best filter length
-window = get_filter_len(degraded_data_1d)
+    # Computing best filter length
+    window = get_filter_len(degraded_data_1d)
 
-# print(" Best filter len : ",window)
+    # print(" Best filter len : ",window)
 
-# data point required before and after click to find median of data
-padding = (window - 1) // 2
+    # data point required before and after click to find median of data
+    padding = (window - 1) // 2
 
-for index in range(len(degraded_data_1d)):
+    for index in range(len(degraded_data_1d)):
         if( detect[index] == 1 ):
             res_data[index] = median.median_filter(degraded_data_1d[index - padding : index + padding + 1], window)
 
 
-# Plotting original, degraded and restored audio data
-figure, axs = plt.subplots(3, 1)
-axs[0].plot(audio_data_1d)
-axs[0].set_title('Original Audio Data')
-axs[1].plot(degraded_data_1d)
-axs[1].set_title('Degraded Audio Data')
-axs[2].plot(res_data)
-axs[2].set_title('Restored Audio Data')
+    # Plotting original, degraded and restored audio data
+    figure, axs = plt.subplots(3, 1)
+    axs[0].plot(audio_data_1d)
+    axs[0].set_title('Original Audio Data')
+    axs[1].plot(degraded_data_1d)
+    axs[1].set_title('Degraded Audio Data')
+    axs[2].plot(res_data)
+    axs[2].set_title('Restored Audio Data')
 
-for ax in axs.flat:
-    ax.label_outer()
+    for ax in axs.flat:
+        ax.label_outer()
 
-plt.show()
+    plt.show()
 
-# Writing the restored data to create a output audio file
-res_data1 = np.array(res_data)
-write("output.wav", samplerate, res_data1.astype(np.int16))
+    # Writing the restored data to create a output audio file
+    res_data1 = np.array(res_data)
+    write("output.wav", samplerate, res_data1.astype(np.int16))
 
