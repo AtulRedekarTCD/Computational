@@ -141,7 +141,7 @@ The restored data is converted as Audio File <[Restored_Median_Filter.wav](https
 
 The Below Figure shows the original, degraded and restored Sound data by Median filter.
 
-<img src="Figure_1.png" width="700">
+<img src="Figure_3.png" width="700">
 
 2. cubic spline is implemented in cubic_spline.py 
 The MSE for cubic_spline is '0.4'.
